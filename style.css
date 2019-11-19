@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("http://backgrounddownload.com/wp-content/uploads/2018/09/whack-a-mole-background-4.png");
+  background-size: cover;
+  background-position: center;
+  max-height: 100vh;
+  max-width: 100vw;;
+}
+
+img {
+  display:none;
+  max-height: 30px;
+}
+
+#left {
+  transform: rotateY(3.142rad);
+}
