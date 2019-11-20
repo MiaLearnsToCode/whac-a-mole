@@ -12,9 +12,8 @@ body {
 
 img {
   display:none;
-  max-height: 30px;
 }
 
-#left {
+/* #right {
   transform: rotateY(3.142rad);
-}
+} */
