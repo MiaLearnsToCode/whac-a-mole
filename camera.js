@@ -115,7 +115,6 @@ async function bindPage() {
       if (y <= yMole + 25 || y >= yMole - 25) {
         score += 1
         scoreKeeper.innerHTML = `Score: ${score}`
-        console.log(score)
       }
     }
   }
@@ -124,7 +123,6 @@ async function bindPage() {
     const rightWrist = keypoints.find(point => point.part === 'rightWrist')
     const imageRight = document.querySelector('#right')
     
-
     if (rightWrist.score > minConfidence) {
       const { y, x } = rightWrist.position
       // renaming mole coordinates to avoid confusion with wrist one..
@@ -142,9 +140,6 @@ async function bindPage() {
     drawPoint(ctx, y * scale, x * scale, 10, imageMole)
   }
 
-  
-  
-  
 
   // choose a random hole every 2 seconds for the mole to pop up from
   setInterval(() => {
