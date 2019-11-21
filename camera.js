@@ -80,13 +80,22 @@ async function bindPage() {
   // draw a mole
   function drawOneMole(ctx, x, y, scale) {
     // const rightWrist = keypoints.find(point => point.part === 'rightWrist')
-    console.log(x,y)
     const imageMole = document.querySelector('#mole')
-    imageMole.style.transform = 'rotateY(180deg)'
     drawPoint(ctx, y * scale, x * scale, 10, imageMole)
   }
 
-  
+  let hole = null
+  let hide = true
+
+  // choose a random hole every 2 seconds for the mole to pop up from
+  setInterval(() => {
+    if (hide) {
+      hole = Math.floor(Math.random() * Math.floor(7))
+    } else {
+      hole = 7
+    }
+    hide = !hide
+  }, 1000) 
 
   // Once the video stream is ready, we start detecting poses:
 
@@ -133,15 +142,39 @@ async function bindPage() {
         {
           x: 290,
           y: 460
+        },
+        {
+          x: 1000,
+          y: 460
+        }, 
+        {
+          x: 1180,
+          y: 560
+        },
+        {
+          x: 825,
+          y: 560
+        },
+        {
+          x: 470,
+          y: 560
+        },
+        {
+          x: 115,
+          y: 560
+        },
+        {
+          x: -500,
+          y: -500
         }
-
       ]
+
+      
 
       poses.forEach(({ score, keypoints }) => {
         if (score >= minPoseConfidence) {
           if (poseNetState.output.showPoints) {
-            const { x, y } = moleCoordinates[1]
-
+            const { x, y } = moleCoordinates[hole]
             drawOneMole(ctx, x, y, 1)
             drawKeypoints(keypoints, minPartConfidence, ctx)
             
