@@ -1,4 +1,5 @@
 async function bindPage() {
+
   // We create an object with the parameters that we want for the model. 
   const poseNetState = {
     algorithm: 'single-pose',
@@ -60,20 +61,77 @@ async function bindPage() {
     })
   }
 
-  // functions to draw the hammer over the hand on the canvas. 
+  const scoreKeeper = document.querySelector('h1')
+  let score = 0
+  scoreKeeper.innerHTML = `Score: ${score}`
+  let hole = null
+  let hide = true
 
+
+  const moleCoordinates = [
+    {
+      x: 645,
+      y: 460
+    },
+    {
+      x: 290,
+      y: 460
+    },
+    {
+      x: 1000,
+      y: 460
+    },
+    {
+      x: 1180,
+      y: 560
+    },
+    {
+      x: 825,
+      y: 560
+    },
+    {
+      x: 470,
+      y: 560
+    },
+    {
+      x: 115,
+      y: 560
+    },
+    {
+      x: -500,
+      y: -500
+    }
+  ]
+
+  // functions to draw the hammer over the hand on the canvas and draws the mole over the given coordinates. 
   function drawPoint(ctx, y, x, r, image) {
     ctx.beginPath()
     ctx.drawImage(image, x, y, 150, 150)
   }
 
+  // function that checks for collision between the mole and the hammer
+  function checkCollision(x, y, xMole, yMole) {
+    if (x <= xMole + 25 && x >= xMole - 25) {
+      if (y <= yMole + 25 || y >= yMole - 25) {
+        score += 1
+        scoreKeeper.innerHTML = `Score: ${score}`
+        console.log(score)
+      }
+    }
+  }
+
   function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
     const rightWrist = keypoints.find(point => point.part === 'rightWrist')
     const imageRight = document.querySelector('#right')
+    
 
     if (rightWrist.score > minConfidence) {
       const { y, x } = rightWrist.position
+      // renaming mole coordinates to avoid confusion with wrist one..
+      const xMole = moleCoordinates[hole]['x']
+      const yMole = moleCoordinates[hole]['y']
       drawPoint(ctx, y * scale, x * scale, 10, imageRight)
+      checkCollision(x, y, xMole, yMole)
     }
   }
 
@@ -84,8 +142,9 @@ async function bindPage() {
     drawPoint(ctx, y * scale, x * scale, 10, imageMole)
   }
 
-  let hole = null
-  let hide = true
+  
+  
+  
 
   // choose a random hole every 2 seconds for the mole to pop up from
   setInterval(() => {
@@ -134,42 +193,6 @@ async function bindPage() {
       }
 
       // calling the drawKeyPoints function for each pose
-      const moleCoordinates = [
-        { 
-          x: 645,
-          y: 460
-        },
-        {
-          x: 290,
-          y: 460
-        },
-        {
-          x: 1000,
-          y: 460
-        }, 
-        {
-          x: 1180,
-          y: 560
-        },
-        {
-          x: 825,
-          y: 560
-        },
-        {
-          x: 470,
-          y: 560
-        },
-        {
-          x: 115,
-          y: 560
-        },
-        {
-          x: -500,
-          y: -500
-        }
-      ]
-
-      
 
       poses.forEach(({ score, keypoints }) => {
         if (score >= minPoseConfidence) {
@@ -177,7 +200,6 @@ async function bindPage() {
             const { x, y } = moleCoordinates[hole]
             drawOneMole(ctx, x, y, 1)
             drawKeypoints(keypoints, minPartConfidence, ctx)
-            
           }
         }
       })
