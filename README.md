@@ -18,6 +18,9 @@ You can play the game here:
 
 Once the user's right wrist is detected using their webcam, they can start hitting the moles that pop up every 2 seconds from random holes. Every time the user hits a mole, they gain a point!
 
+----
+
+<img src="assets/giphy.gif" height=400>
 <img src="assets/visual.png">
 
 
