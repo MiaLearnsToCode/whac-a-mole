@@ -5,7 +5,7 @@ My game is 2D (whilst hers uses A-frame) so aside from the camera and poses setu
 
 ## Demo
 
-You can play the game here: 
+You can play the game here: https://mialearnstocode-whac-a-mole-1.glitch.me/
 
 ## Stack
 
