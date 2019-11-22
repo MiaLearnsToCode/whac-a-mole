@@ -18,6 +18,8 @@ You can play the game here: https://mialearnstocode-whac-a-mole-1.glitch.me/
 
 Once the user's right wrist is detected using their webcam, they can start hitting the moles that pop up every 2 seconds from random holes. Every time the user hits a mole, they gain a point!
 
+![Alt Text](assets/giphy.gif)
+
 <img src="assets/visual.png">
 
 
